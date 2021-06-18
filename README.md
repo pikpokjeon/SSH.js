@@ -152,8 +152,192 @@ const chart2 = svg.appendAll(line)
 
 ```
 
+
+## 현
+
+#### 차트 
+최소한의 설정으로 차트를 만들수 있어야하고 라이브러리를 사용하는 사용자가 쉽게 사용 할수 있어야 한다. 
+확장성을 고려하여 개발
+
+#### 차트의 요구사항
+javascript 및 svg 지원해야함 ie 9 이상
+차트를 그릴 html DOM 필수
+차트 유형 필수 입력
+차트 속성 미입력시 default 로 적용
+객체 형태로 데이터 전달
+차트 데이터 형태 
+
+```
+data = [
+    {
+        “date”: “10-01”,
+        “population”: 240
+    },
+    {
+        “date”: “10-02”,
+        “population”: 550
+    },
+    {
+        “date”: “10-03”,
+        “population”: 950
+    }
+]
+```
+#### 항목
+value와 category를 설정
+레전드, 툴팁, 그리드, default 스타일
+변경은 chartOptions 를 객체 형태로 전달
+
+#### 차트 유형
+컬럼,라인 차트
+
+#### 차트의 옵션 기능
+format - 날짜, 숫자단위, 가격단위
+legend - 범례
+tooltip - 마우스 오버시 나오는 툴팁 박스
+grid - 기본 라인 디자인
+컬럼차트 - stacked 유형
+라인차트 - curve, step, point
+
+``` javascript 
+chartOptions = {
+	title: {
+		text: ‘테스트’
+	},
+	series: [
+               { 
+			type: 'line',
+		  	value: ‘population’,	
+			category: ‘date’,
+			title: ‘text’,
+			
+		},
+		{ 
+			type: 'bar',
+		  	value: ‘other’,	
+			category: ‘item’,
+			title: ‘text’
+		},
+    	],
+	event: {
+		legend: [
+			display: true,
+		],
+		tooltip: [
+			display: true,
+		],
+		cursor: [
+			display: true
+		]
+	}
+}
+
+SSH(data, chartoptions);
+```
+
+## 진희
+
+```
+## 작업 쪼개기
+
+### 축
+
+* series 로 받은 데이터를 기준으로 x, y 축의 max 값을 계산한다.
+* x, y축을 만들고 레이블을 표시한다.
+* x 축에 따른 index 값 계산
+
+### 눈금과 눈금선
+
+* x, y 값을 기준으로 적정한 간격을 계산한다. (적정한 간격의 정책 정의 필요)
+* 눈금, 눈금선을 표시한다.
+* 눈금선에 해당하는 축의 값을 표시한다.
+
+### 차트
+
+* 라인
+  * 데이터에 해당하는 값의 불릿 표시한다.
+  * 데이터 간의 연결 션을 표시한다.
+
+* 바
+  * 데이터에 해당하는 값의 바를 표시한다.
+
+### 옵션 만들기
+
+* 스택
+* 퍼센트
+
+### 액션 만들기
+
+* 호버시 툴팁
+* 호버시 그리드
+* 데이터 변경 대응
+```
+
+
+``` javascript
+const data = [
+    {
+        “date”: “10-01”,
+        “population”: 240
+    },
+    {
+        “date”: “10-01”,
+        “population2”: 140
+    },
+    {
+        “date”: “10-02”,
+        “population”: 550
+    },
+    {
+        “date”: “10-03”,
+        “population”: 950
+    }
+]
+
+const chartOptions = {
+    title: {
+        text: '판매량',
+    },
+    series: [
+        {
+            type: 'line || bar',
+            value: ‘population’,
+            category: ‘date’,
+        },
+        {
+            type: 'line || bar',
+            value: ‘totalSales’,
+            category: ‘date’,
+        },
+    ],
+    options: {
+        event: {
+            tooltip: [
+                display: true, // default false
+                formatter: (value) => { return customValue; }, // 툴팁 커스터마이징
+            ],
+            cursor: [
+                display: true // default false
+                format: ['vertical', 'horizontal', 'cross']
+            ]
+        },
+        // size: {width: 1500, height: 750}, 스크립트로 함수에 사이즈 가져옴 HTML으로 사이즈 정함
+        responsive: true,
+        legend: true,
+        subType: bar 이면 stack, line 이면 curve, stack, straight,
+        percent: true, // 절대값/ 상대값 표시
+    },
+}
+
+Chart.init(data, chartOptions)
+```
+
+
+
+
+
 ### [ ] 3. 차트 정의 객체에 필요한 요소생성
-- [ ] 6월 18일
+- [ ] 
 
 * 차트에 필요한 html요소
 * 차트에 필요한 svg요소
