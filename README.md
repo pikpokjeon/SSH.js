@@ -69,209 +69,6 @@
 ### [x] 2. 차트 정의 방식
 - [x] 6월 18일
 
-#### 정의
-- 차트를 만든다. 문서가 없어도 사용가능할 정도로 직관적이고 일관성있게 만든다.
-- x축과 y축의 데이터 갯수는 일치해야한다.
-- 차트 옵션은 stacked, percentage가 있다.
-- 툴팁은 formatter를 이용하여 값을 전달받아 커스터마이징이 가능하다.
-- 레전드, 툴팁, 그리드 등의 스타일은 기본 스타일로 우선 제공한다.
- + 데이터 변경을 위한 함수 추가가 필요함.
-
-```javascript
-xAxis = ['2021-06-01', '2021-06-02', '2021-06-03', '2021-06-04', '2021-06-05'];
-
-chartOptions = {
-    title: {
-        text: '판매량',
-    },
-    series: [
-        {
-            type: 'line || bar',
-            legend: '사과',
-            values: {
-                x: xAxis,
-                y: [10, 20, 30 , 40, 10],
-            },
-        },
-        {
-            type: 'line || bar',
-            legend: '바나나',
-            values: {
-                x: xAxis,
-                y: [15, 25, 35 , 45, 15],
-            },
-        },
-        {
-            type: 'line || bar',
-            legend: '딸기',
-            values: {
-                x: xAxis,
-                y: [1, 2, 3 , 4, 1],
-            },
-        },
-    ],
-    axis: {
-        x: {
-            name: '과일의 종류', // 축 이름
-        },
-        y: {
-            name: '판매개수', // 축 이름
-            labels: '{value}개', // 레이블 커스터마이징
-        },
-    },
-    options: {
-        stack: true,
-        percent: true,
-        tooltip: {
-            formatter: (value) => { return customValue; }, // 툴팁 커스터마이징
-        },
-    },
-}
-
-chart.init(chartOptions);
-```
-#### 요소 생성
-예시
-``` javascript
-const svg = ssh.create('svg')
-    .attr({ height, width, viewbox: `0 0 ${ width } ${ height } ` }).toChart
-
-const bar = ssh.group('name').create('rect').type('histogram')
-const line = ssh.group('name2').create('path').type('curve')
-
-const axis = svg.group('axis').axis({ x: ['cost', { visibility: 'hiddne' }], y: ['price', { color: 'red' }] })
-
-
-const chart1 = svg.appendAll(bar)
-    .data('legendTitle1', [{ x: 'A', y: 1 }, { x: 'C', y: 2 }])
-    .attr({ background: 'red' })
-    .animate({})
-
-const chart2 = svg.appendAll(line)
-    .data('legendTitle2', [{ x: 'B', y: 3 }, { x: 'A', y: 4 }])
-
-```
-
-
-## 현
-
-#### 차트 
-최소한의 설정으로 차트를 만들수 있어야하고 라이브러리를 사용하는 사용자가 쉽게 사용 할수 있어야 한다. 
-확장성을 고려하여 개발
-
-#### 차트의 요구사항
-javascript 및 svg 지원해야함 ie 9 이상
-차트를 그릴 html DOM 필수
-차트 유형 필수 입력
-차트 속성 미입력시 default 로 적용
-객체 형태로 데이터 전달
-차트 데이터 형태 
-
-```
-data = [
-    {
-        “date”: “10-01”,
-        “population”: 240
-    },
-    {
-        “date”: “10-02”,
-        “population”: 550
-    },
-    {
-        “date”: “10-03”,
-        “population”: 950
-    }
-]
-```
-#### 항목
-value와 category를 설정
-레전드, 툴팁, 그리드, default 스타일
-변경은 chartOptions 를 객체 형태로 전달
-
-#### 차트 유형
-컬럼,라인 차트
-
-#### 차트의 옵션 기능
-format - 날짜, 숫자단위, 가격단위
-legend - 범례
-tooltip - 마우스 오버시 나오는 툴팁 박스
-grid - 기본 라인 디자인
-컬럼차트 - stacked 유형
-라인차트 - curve, step, point
-
-``` javascript 
-chartOptions = {
-	title: {
-		text: ‘테스트’
-	},
-	series: [
-               { 
-			type: 'line',
-		  	value: ‘population’,	
-			category: ‘date’,
-			title: ‘text’,
-			
-		},
-		{ 
-			type: 'bar',
-		  	value: ‘other’,	
-			category: ‘item’,
-			title: ‘text’
-		},
-    	],
-	event: {
-		legend: [
-			display: true,
-		],
-		tooltip: [
-			display: true,
-		],
-		cursor: [
-			display: true
-		]
-	}
-}
-
-SSH(data, chartoptions);
-```
-
-## 진희
-
-```
-## 작업 쪼개기
-
-### 축
-
-* series 로 받은 데이터를 기준으로 x, y 축의 max 값을 계산한다.
-* x, y축을 만들고 레이블을 표시한다.
-* x 축에 따른 index 값 계산
-
-### 눈금과 눈금선
-
-* x, y 값을 기준으로 적정한 간격을 계산한다. (적정한 간격의 정책 정의 필요)
-* 눈금, 눈금선을 표시한다.
-* 눈금선에 해당하는 축의 값을 표시한다.
-
-### 차트
-
-* 라인
-  * 데이터에 해당하는 값의 불릿 표시한다.
-  * 데이터 간의 연결 션을 표시한다.
-
-* 바
-  * 데이터에 해당하는 값의 바를 표시한다.
-
-### 옵션 만들기
-
-* 스택
-* 퍼센트
-
-### 액션 만들기
-
-* 호버시 툴팁
-* 호버시 그리드
-* 데이터 변경 대응
-```
 
 ## 차트 생성 초기정의
 ``` javascript
@@ -360,15 +157,43 @@ Chart.init(data, chartOptions)
 
 
 
-### [ ] 3. 차트 정의 객체에 필요한 요소생성
-- [ ] 
+### [ ] 3. 차트 생성에 필요한 것들은 무엇이 있을까?
+- [ ] 6월 26일 회의
 
-* 차트에 필요한 html요소
-* 차트에 필요한 svg요소
-* 엘리먼트에 속성으 부여하는 함수
-* 엘리먼트를 생성하는 함수
-* 차트 구성에 필요한 데이터
-* 차트 요소 생성에 필요한 함수
+1. 차트 옵션에서 함수가 필요한 부분을 나눈다
+- 차트 생성에 필요한 요소들 
+- 차트에 필요한 이벤트
+- x/y 축 좌표 계산하는 함수
+
+
+
+2. 차트 생성에 필요한 요소들을 분류한다
+    https://developer.mozilla.org/ko/docs/Web/SVG/Element
+
+(1) 한번만 렌더링 되는지/ 지속적으로 특정 조건하에 렌더링 되는지
+(2) 한 요소가 여러개 생성되어야 하는지
+
+- 컨테이너
+- 필터
+- 그래픽/ 모양 : 원, 사각형, 선, 패스, 텍스트
+- 그라디언트
+- 스크립트 필터 등등 ..
+    
+
+3. 요소들을 생성하는 함수
+- 초기 속성이 적용된 요소 생성
+- 요소들에 속성을 동적으로 적용
+- 요소를 반복적으로 생성
+- 요소를 동적으로 생성( 업데이트)
+- 요소들을 결합하여, 형태를 구성하기 위한 함수 (그라데이션/ 배경자르기)
+
+
+4. 요소들로 트리를 구성하고 렌더링하는 함수
+- 요소들로 만들 수 있는 형태 트리 구조로 만들고
+- 사용자 입력값에 따른 전체 비율과 좌표값 연산
+- 필요한 부분에 해당 트리를 확장 가능하도록
+- 완성된 트리를 렌더링 (차트 init)
+    
 
 ### [ ] 4. HTML요소 생성
 * 사전에 필요한 html요소를 동적으로 생성
