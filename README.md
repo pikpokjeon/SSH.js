@@ -66,8 +66,8 @@
 
 
 
-### [ ] 2. 차트 정의 방식
-- [ ] 6월 18일
+### [x] 2. 차트 정의 방식
+- [x] 6월 18일
 
 #### 정의
 - 차트를 만든다. 문서가 없어도 사용가능할 정도로 직관적이고 일관성있게 만든다.
@@ -273,59 +273,83 @@ SSH(data, chartoptions);
 * 데이터 변경 대응
 ```
 
-
+## 차트 생성 초기정의
 ``` javascript
 const data = [
     {
         “date”: “10-01”,
-        “population”: 240
+        "part": "A",
+        “population”: 240,
+        "price":10,
     },
     {
         “date”: “10-01”,
-        “population2”: 140
+        "part": "B",
+        “population”: 60,
+        "price":50,
     },
     {
         “date”: “10-02”,
-        “population”: 550
+        "part": "B"
+        “population”: 140,
+        "price":20,
     },
-    {
-        “date”: “10-03”,
-        “population”: 950
-    }
 ]
+
+ // HTML으로 사이즈 정하면 스크립트로 전체 svg사이즈 가져와 후에 옵션객체에 바인딩 해준다 size: {width: 1500, height: 750},
 
 const chartOptions = {
     title: {
-        text: '판매량',
+        text: '판매량',                                                     // 차트 제목
     },
     series: [
         {
-            type: 'line || bar',
-            value: ‘population’,
-            category: ‘date’,
+            type: 'line || bar',                                            // 타입
+            subType: bar 이면 'histogram' , line 이면 'curve', 'stack'      //기본값은 비워두기
+            value: ‘population’,                                            // 데이터 값
+            group: ‘date’,                                                  // 데이터 기준 값
         },
         {
-            type: 'line || bar',
-            value: ‘totalSales’,
-            category: ‘date’,
+            type: 'bar',
+            subType: 'histogram' 
+            value: 'price',
+            group: ‘date’,
         },
     ],
     options: {
         event: {
-            tooltip: [
-                display: true, // default false
-                formatter: (value) => { return customValue; }, // 툴팁 커스터마이징
-            ],
-            cursor: [
-                display: true // default false
-                format: ['vertical', 'horizontal', 'cross']
-            ]
+            tooltip: [{
+                target: 'population'
+                format: (value) => ({ 인구: value + '명' }),            // 툴팁 커스터마이징
+                ---
+                format: ({population, price}) => ({population: '', price: ''}) 
+                ---
+                dots: {
+                    display: true || false,                              // 전체
+                    click: (dot) => {color: '', display: true || false} // 전체 점들 중에 위치한 하나의 점의 변화
+                    hover: (dot) => {color: '', display: true || false}
+                },
+                message: {                                              // 툴팁 메세지를 띄울 것인지 예:) 인구 60 명
+                    display: true || false,                             // 모든 타겟이 false인 경우 박스를 아예 숨김
+                    ... 위 dots와 같음
+                }],
+            pointer: {
+                format: ['vertical', 'horizontal']                      // 양쪽 다 있으면 십자 형태
+                position: ['data','mouse']                              // 포인터 라인이 데이터위치에만 잡히는지
+            }]
+        ,
+        range: {
+            select: 'aside' || 'border' || 'area'                       // 차트 선택 구간 한쪽, 경계 양쪽, 구역범위
+        }
         },
-        // size: {width: 1500, height: 750}, 스크립트로 함수에 사이즈 가져옴 HTML으로 사이즈 정함
         responsive: true,
         legend: true,
-        subType: bar 이면 stack, line 이면 curve, stack, straight,
-        percent: true, // 절대값/ 상대값 표시
+        infarctSize: 'absolute' || 'relative' ,                         // 절대값/ 상대값 수치 표현
+        theme : {
+            mode : 'dark' || 'light',
+            name: 'name' 
+        }
+        
     },
 }
 
