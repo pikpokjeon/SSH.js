@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./chart/chart.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="chart"></div>
+
+    <script>
+         ////////////////////////
+         const data = [
+            {
+                'date': '10-01',
+                'population': 402
+            },
+            {
+                'date': '10-02',
+                'population': 802
+            }
+        ]
+        const options = {
+            title: {
+                text: '판매량',
+            },
+            series: [
+                {
+                    type: 'bar',
+                    value: "population",
+                    category: "date",
+                }
+            ],
+            options: {
+                event: {
+                    tooltip: [
+                        {
+                            display: true, // default false
+                            formatter: (value) => { return customValue; }, // 툴팁 커스터마이징
+                        }
+                    ],
+                    cursor: [
+                        {
+                            display: true, // default false
+                            format: ['vertical', 'horizontal', 'cross']
+                        }
+                    ]
+                },
+                // size: {width: 1500, height: 750}, 스크립트로 함수에 사이즈 가져옴 HTML으로 사이즈 정함
+                responsive: true,
+                legend: true,
+                subType: "bar",//bar 이면 stack, line 이면 curve, stack, straight,
+                percent: true, // 절대값/ 상대값 표시
+            },
+        }
+        const Chart = (() => {
+            const options = {
+                // options 값 없으면 기본 옵션값 
+            }
+            // 초기
+            const init = (id, data, options) => {
+                const el = document.getElementById(id);
+                let width = parseInt(el.getAttribute('width'));
+                let height = parseInt(el.getAttribute('height'));
+                const size = { width, height };
+
+                createSvg(el, size);
+                createChart(data, options);
+            }
+
+            // svg 생성
+            const createSvg = (el, size) => {
+                const svg = document.createElement('svg');
+                svg.setAttribute('width', size.width);
+                svg.setAttribute('height', size.height);
+                svg.setAttribute('viewBox', `0 0 ${size.width} ${size.height}`);
+                el.append(svg);
+            }
+
+            // chart 생성
+            const createChart = (data, options) => {
+                const g = document.createElement("g");
+                options.series.forEach((item)=> {
+                    if( item.type == "bar" ) {
+                        createYaxis(item.value)
+                        createXaxis(item.category)
+                    } else if( item.type == "line" ) {
+                        console.log('line')
+                    }
+                })
+            }
+
+            // x축
+            const createXaxis = () => {
+                const g = document.createElement("g");
+            }
+
+            // y축
+            const createYaxis = (y) => {
+                const g = document.createElement("g");
+                
+            }
+            console.log(data)
+            // event 
+            const eventTooltip = () => {
+
+            }
+
+            const eventCursor = () => {
+
+            }
+
+            return {
+                init: init
+            }
+        })();
+        
+        Chart.init('chart', data, options);
+
+    </script>
+</body>
+</html>
