@@ -1,0 +1,52 @@
+[
+    {
+        "date": "10-01",
+        "part": "A",
+        "population": 240
+    },
+    {
+        "date": "10-02",
+        "part": "B",
+        "population": 640
+    },
+    {
+        "date": "10-03",
+        "part": "B",
+        "population": 70
+    },
+    {
+        "date": "10-04",
+        "part": "A",
+        "population": 360
+    },
+    {
+        "date": "10-05",
+        "part": "A",
+        "population": 840
+    },
+    {
+        "date": "10-06",
+        "part": "B",
+        "population": 290
+    },
+    {
+        "date": "10-07",
+        "part": "A",
+        "population": 380
+    },
+    {
+        "date": "10-08",
+        "part": "A",
+        "population": 540
+    },
+    {
+        "date": "10-09",
+        "part": "B",
+        "population": 230
+    },
+    {
+        "date": "10-10",
+        "part": "B",
+        "population": 940
+    }
+]
