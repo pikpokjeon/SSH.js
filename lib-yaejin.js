@@ -1,29 +1,28 @@
 
-const genElement = ({ type, attribute, animate }) =>
+const genElement = ({ type, attr, animate }) =>
 {
-    console.log(type, attribute)
     type = document.createElementNS('http://www.w3.org/2000/svg', type)
 
-    for (const [t, v] of Object.entries(attribute))
+    for (const [t, v] of Array.from(Object.entries(attr)))
     {
-        console.log(t, v)
-        if (t !== 'id' || t !== 'name') type.setAttributeNS(null, t, v)
+        type.setAttributeNS(null, t, v)
     }
 
     return type
 
 }
 const Style = () => ({
-    color: { bg: '#141d31', default: 'black', focus: 'red', purple: '#9f57ff', blue: '#00f3ff' },
+    color: { bg: '#141d31', default: '#141d31', focus: 'red', purple: '#9f57ff', blue: '#00f3ff' },
     line: (color, width) => `stroke: ${color.default}; stroke-width: ${width};`,
     opacity: n => `opacity: ${n}`,
     dashline: n => ` stroke-dasharray:${n},${n};`,
     stop: (offset, color, opacity) => ({ offset: `${offset}%`, style: `stop-color:${color}; stop-opacity: ${opacity}` }),
     textAlign: { 'dominant-baseline': 'start', 'text-anchor': 'start' }
 })
-const computeSize = (w, d) =>
+const computeSize = (w, h, d) =>
 {
-    const [height, margin] = [250, 100]
+    const padding = 50
+    const [height, margin] = [h - padding, 100]
     const unitX = (w - margin) / d.length
     const gap = unitX / d.length
     const [maxData, minData] = [Math.max(...Array.from(d)), (Math.min(...Array.from(d)))]
@@ -36,6 +35,7 @@ const computeSize = (w, d) =>
         unitX,
         unitY,
         margin,
+        padding,
         MAX,
         SUM,
         maxData,
@@ -52,19 +52,32 @@ const computeSize = (w, d) =>
     }
 
 }
-const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
+
+const CreateSVGGroupElement = group =>
 {
-    const s = computeSize(w, d)
+    let temp = {}
+    temp[Symbol.toStringTag] = group[Symbol.toStringTag]
+    Object.entries(group).reduce((obj, el) =>
+    {
+        const element = genElement({ type: el[1]['type'], attr: { ...el[1]['attr'] } })
+        const id = el[0]
+        temp = Object.assign(temp, { [id]: element })
+    }, temp)
+    return temp
+}
+
+const getSVG = ({ width, height, d, i, v }) => ({ attr, id }) =>
+{
+    const s = computeSize(width, height, d)
     const style = Style()
     const base = {
-        width: w, height: h
+        width: width, height: height
     }
-    console.log(id)
     const baseSVG =
     {
         svg: {
             type: 'svg',
-            attribute: {
+            attr: {
                 id: id.svg,
                 name: 'svg',
                 ...base, ...attr?.svg
@@ -72,7 +85,7 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
         },
         eventArea: {
             type: 'rect',
-            attribute: {
+            attr: {
                 id: id.eventArea,
                 name: 'eventArea',
                 ...base, ...attr?.eventArea
@@ -80,7 +93,7 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
         },
         group: {
             type: 'g',
-            attribute: {
+            attr: {
                 id: id.group,
                 name: 'group',
                 ...base, ...attr?.group
@@ -97,7 +110,8 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
                 id: id.label,
                 name: 'label',
                 x: s.x(i),
-                y: h - 30,
+                y: height - 30,
+                fill: style.color.purple,
                 ...attr?.label
             },
 
@@ -110,6 +124,7 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
                 name: 'dataText',
                 x: 40,
                 y: s.y(v),
+                fill: style.color.purple,
                 ...attr?.dataText
             },
 
@@ -120,10 +135,10 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
             attr: {
                 id: id.plot,
                 name: 'plot',
-                cx: s.x(i),
+                cx: s.x(i) + 10,
                 cy: s.y(v),
                 r: 5,
-                fill: "white",
+                fill: style.color.purple,
                 ...attr?.plot
             },
 
@@ -133,7 +148,7 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
             type: 'g',
             attr: {
                 id: id.gBox,
-                name: 'gBox', ...attr?.gBox
+                name: 'gBox', ...base, ...attr?.gBox
             },
 
         },
@@ -317,14 +332,14 @@ const getSVG = ({ attr, id }) => ({ width: w, height: h, d, i, v }) =>
         bar:
         {
             type: 'rect',
-            attribute: {
+            attr: {
                 id: id.bar,
                 name: 'bar',
                 x: s.x(i),
                 y: s.y(v),
-                width: 7,
-                height: 10,
-                fill: style.color.default,
+                width: 20,
+                height: height - s.y(v) - 70,
+                fill: style.color.red,
                 ...attr?.bar
             },
 
@@ -353,4 +368,4 @@ const copyParams = (params) =>
 }
 
 
-export { copyParams, getSVG, computeSize, genElement }
+export { copyParams, getSVG, computeSize, genElement, CreateSVGGroupElement }
