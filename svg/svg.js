@@ -7,7 +7,6 @@ export const createElementMethodChaining = (methods) => (type, chain = {}) =>
     const compute = Object.values(chain).reduce(
         (_, [ fn, data ]) => fn(el)(data), el
     )
-
     for (const [ name, fn ] of Object.entries(methods))
     {
         compute[ name ] = (att) =>
@@ -17,7 +16,6 @@ export const createElementMethodChaining = (methods) => (type, chain = {}) =>
             return compute
         }
     }
-
     return compute
 }
 
@@ -32,6 +30,7 @@ export const appendChildren =
                 return el
             }, el)
 
+            
 export const setAttributes = (el) => (attr) =>
     Object.entries(attr).reduce(
         (_, [t, v]) =>
@@ -42,20 +41,33 @@ export const setAttributes = (el) => (attr) =>
         , el
     )
 
+
 export const setTextContent = (el) => (text) =>
 {
     el.textContent = text; return el
 }
 
+
 export const createSVGElement = (type) =>
     document.createElementNS('http://www.w3.org/2000/svg', type)
-    
-export const setTarget = (el) => (target) => 
+
+
+export const createMultiple = (type, initCount, list) =>
 {
-    const animateEl = createSVG('animate').attr({attributeName: target})
-    el.append([animateEl])
-    return el
+    const attrMap = f => (...args) =>
+        listingElements(type, list, initCount)
+            .map((e, i) =>
+                e.attr(f(i, e, ...args)))
+    return {attrMap}
 }
+
+const listingElements = (type, list, count) =>
+{
+    if (count < 1) return list
+    list.push( createSVG(type))
+    return listingElements(type,list,count-1)
+}
+
 
 const svgMethods = {
     attr: (el) => (attr) => setAttributes(el)(attr),

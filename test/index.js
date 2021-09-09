@@ -1,4 +1,4 @@
-import {createSVG} from '../svg/svg.js'
+import {createSVG, createMultipleEls, createSVGElement,createMultiple} from '../svg/svg.js'
 import { animateSVG } from '../svg/animation.js'
 
 const svgArea = document.getElementById('svg-area')
@@ -24,7 +24,14 @@ const rect2 = createSVG('rect').attr({
     y: 100,
 })
 
-const dropDownRect = animateSVG(rect2).target('y')
+const dropDownRect = animateSVG(rect2)
+    .target('y')
+    .animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
+
+
+const circles = createMultiple('circle', 5, [])
+    .attrMap((i, t) => {t = ({cx: i * 200, cy: 50, r: i * 10}); return t})()
+    
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
@@ -38,8 +45,8 @@ const svg = createSVG('svg')
                 x: 200,
                 y: 300,
             }),
-            dropDownRect.animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
-            
+            dropDownRect,
+           ...circles
         ])
     ])
 
