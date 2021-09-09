@@ -32,6 +32,9 @@ const dropDownRect = animateSVG(rect2)
 const circles = createMultiple('circle', 5, [])
     .attrMap((i, t) => {t = ({cx: i * 200, cy: 50, r: i * 10}); return t})()
     
+animateSVG(circles[2])
+    .target('cy')
+    .animate({dur:"5s",from:3,to:600,repeatCount: "indefinite"})
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
