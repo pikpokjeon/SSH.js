@@ -3,8 +3,6 @@ import { createHTMLElement,setTextContent,setAttribute,createFragment } from '..
 
 
 
-const editor = document.getElementById('code-editor')
-const run = document.getElementById('run-code')
 const svgArea = document.getElementById('svg-area')
 
 
