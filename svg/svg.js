@@ -1,5 +1,4 @@
-import {pipe} from '../lib/helper'
-import {animate} from './animation'
+
 
 export const createElementMethodChaining = (methods) => (type, chain = {}) =>
 {
@@ -30,7 +29,7 @@ export const appendChildren =
                 return el
             }, el)
 
-            
+
 export const setAttributes = (el) => (attr) =>
     Object.entries(attr).reduce(
         (_, [t, v]) =>

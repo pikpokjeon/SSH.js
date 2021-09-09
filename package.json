@@ -11,7 +11,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "main": "index.js",
+  "main": "test/index.js",
   "test": "test/index.js",
   "files": [
     "dist"
