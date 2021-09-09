@@ -1,7 +1,5 @@
 import {createSVG} from '../svg/svg.js'
-import { createHTMLElement,setTextContent,setAttribute,createFragment } from '../lib/html.js'
-
-
+import { animate } from '../svg/animation.js'
 
 const svgArea = document.getElementById('svg-area')
 
@@ -27,12 +25,14 @@ const rect2 = createSVG('rect').attr({
     y: 100,
 })
 
+animate(rect2).target('y').animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
+
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
     .append([
         createSVG('g').append([
-            rect1.append([testAnimation]), rect2.append([testAnimation]),
+            rect1.append([testAnimation]), 
             createSVG('rect').attr({
                 width: 400,
                 height: 100,
@@ -40,6 +40,7 @@ const svg = createSVG('svg')
                 x: 200,
                 y: 300,
             }),
+            rect2
             
         ])
     ])

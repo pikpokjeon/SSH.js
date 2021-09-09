@@ -1,4 +1,27 @@
 import {pipe} from '../lib/helper'
+import {animate} from './animation'
+
+export const createElementMethodChaining = (methods) => (type, chain = {}) =>
+{
+    const el = (typeof type === 'string') ? createSVGElement(type) : type
+    const compute = Object.values(chain).reduce(
+        (_, [ fn, data ]) => fn(el)(data), el
+    )
+
+    for (const [ name, fn ] of Object.entries(methods))
+    {
+        compute[ name ] = (att) =>
+        {
+            chain[ name ] = [ fn, att ]
+            fn(el)(att)
+            return compute
+        }
+    }
+
+    return compute
+}
+
+export const createSVG = (type,chain) => createElementMethodChaining(svgMethods)(type,chain)
 
 export const appendChildren =
     (el) =>
@@ -27,30 +50,17 @@ export const setTextContent = (el) => (text) =>
 export const createSVGElement = (type) =>
     document.createElementNS('http://www.w3.org/2000/svg', type)
     
+export const setTarget = (el) => (target) => 
+{
+    const animateEl = createSVG('animate').attr({attributeName: target})
+    el.append([animateEl])
+    return el
+}
+
 const svgMethods = {
     attr: (el) => (attr) => setAttributes(el)(attr),
     append: (el) => (y) => appendChildren(el)(...y),
-    text: (el) => (text) => setTextContent(el)(text) 
+    text: (el) => (text) => setTextContent(el)(text),
 }
 
 //  메서드 체이닝
-export const createSVG = (type, chain = {}) =>
-{
-    const el = (typeof type === 'string') ? createSVGElement(type) : type
-    const compute = Object.values(chain).reduce(
-        (_, [ fn, data ]) => fn(el)(data), el
-    )
-
-    for (const [ name, fn ] of Object.entries(svgMethods))
-    {
-        compute[ name ] = (att) =>
-        {
-            chain[ name ] = [ fn, att ]
-            fn(el)(att)
-            return compute
-        }
-    }
-
-    return compute
-}
-
