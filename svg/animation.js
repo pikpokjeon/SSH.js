@@ -19,4 +19,4 @@ const animateMethods = {
 }
 
 
-export const animate = (el,chain) => createElementMethodChaining(animateMethods)(el,chain)
+export const animateSVG = (el,chain) => createElementMethodChaining(animateMethods)(el,chain)

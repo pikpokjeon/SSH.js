@@ -1,8 +1,7 @@
 import {createSVG} from '../svg/svg.js'
-import { animate } from '../svg/animation.js'
+import { animateSVG } from '../svg/animation.js'
 
 const svgArea = document.getElementById('svg-area')
-
 
 const rect1 = createSVG('rect').attr({
     width: 200,
@@ -25,8 +24,7 @@ const rect2 = createSVG('rect').attr({
     y: 100,
 })
 
-animate(rect2).target('y').animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
-
+const dropDownRect = animateSVG(rect2).target('y')
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
@@ -40,7 +38,7 @@ const svg = createSVG('svg')
                 x: 200,
                 y: 300,
             }),
-            rect2
+            dropDownRect.animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
             
         ])
     ])
