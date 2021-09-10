@@ -11,11 +11,6 @@ const rect1 = createSVG('rect').attr({
     y: 300,
 })
 
-const testAnimation = createSVG('animate').attr({
-    attributeName: "rx",
-    values: "1;20;0", dur: "3s", repeatCount:"infinite"
-})
-
 const rect2 = createSVG('rect').attr({
     width: 100,
     height: 400,
@@ -24,32 +19,39 @@ const rect2 = createSVG('rect').attr({
     y: 100,
 })
 
+
 const dropDownRect = animateSVG(rect2)
     .target('y')
-    .animate({dur: "1s", from: 0, to: 200, repeatCount: "indefinite"})
+    .animate(({y})=>({dur: "1s", from: 0, to: y+200, repeatCount: "indefinite"}))
 
 
 const circles = createMultiple('circle', 5, [])
-    .attrMap((i, t) => {t = ({cx: i * 200, cy: 50, r: i * 10}); return t})()
+    .attrMap((t, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))()
     
+const squares = createMultiple('rect', 7, [])
+    .attrMap((t, i) => ({
+        width: 100,
+        height: 100,
+        fill: 'yellow',
+        x: 200 * i ,
+        y: 300
+    }))()
+
+
 animateSVG(circles[2])
     .target('cy')
-    .animate({dur:"5s",from:3,to:600,repeatCount: "indefinite"})
+    .animate(({cy}) => ({dur:"5s",from:3,to:cy+100,repeatCount: "indefinite"}))
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
     .append([
         createSVG('g').append([
-            rect1.append([testAnimation]), 
-            createSVG('rect').attr({
-                width: 400,
-                height: 100,
-                fill: 'yellow',
-                x: 200,
-                y: 300,
-            }),
+            ...squares,
+            animateSVG(squares[4])
+                .target('y')
+                .animate(({y}) => ({dur: '2s', from: y, to: 100, repeatCount: 'indefinite'})),
             dropDownRect,
-           ...circles
+            ...circles,
         ])
     ])
 
