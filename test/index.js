@@ -1,4 +1,4 @@
-import {createSVG, createMultipleEls, createSVGElement,createMultiple} from '../svg/svg.js'
+import {createSVG, createMultiple} from '../svg/svg.js'
 import { animateSVG } from '../svg/animation.js'
 
 const svgArea = document.getElementById('svg-area')
