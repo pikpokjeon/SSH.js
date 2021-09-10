@@ -53,10 +53,10 @@ export const createSVGElement = (type) =>
 
 export const createMultiple = (type, initCount, list) =>
 {
-    const attrMap = f => (...args) =>
+    const attrMap = f =>
         listingElements(type, list, initCount)
             .map((e, i) =>
-                e.attr(f(e, i, ...args)))
+                e.attr(f(e, i)))
     return {attrMap}
 }
 

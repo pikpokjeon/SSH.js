@@ -27,7 +27,7 @@ const dropDownRect = animateSVG(rect2)
 
 
 const circles = createMultiple('circle', 5, [])
-    .attrMap((t, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))()
+    .attrMap((t, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))
     
 const squares = createMultiple('rect', 7, [])
     .attrMap((t, i) => ({
@@ -36,7 +36,7 @@ const squares = createMultiple('rect', 7, [])
         fill: 'yellow',
         x: 200 * i ,
         y: 300
-    }))()
+    }))
 
 
 animateSVG(circles[2])
