@@ -56,7 +56,7 @@ export const createMultiple = (type, initCount, list) =>
     const attrMap = f => (...args) =>
         listingElements(type, list, initCount)
             .map((e, i) =>
-                e.attr(f(i, e, ...args)))
+                e.attr(f(e, i, ...args)))
     return {attrMap}
 }
 
