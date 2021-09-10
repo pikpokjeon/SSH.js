@@ -1,8 +1,19 @@
+body{
+    overflow-x: hidden;
+}
 main {
     display: flex;
     flex-wrap: nowrap;
 }
-
+section{
+    display: flex;
+}
+article {
+    margin-bottom: 10px;
+}
+h3{
+    margin: 18px 0 0 0;
+}
 .code-editor-container {
     right: 0;
     position: fixed;
@@ -32,4 +43,49 @@ button {
     height: 50px;
     width: 100px;
     font-size: large;
+}
+#code-area{
+    width: 40vw;
+    height: 92%;
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-shadow: 10px 8px 31px #d8d8d8;
+    padding-left: 30px;
+    margin-left: -72px;
+}
+fn, l ,v {
+    font-weight: 700;
+}
+fn{
+    color: #0069c3;
+}
+l {
+    color: #e84646;
+}
+v{
+
+}
+c{
+    background: #d9fffd;
+    font-size: 13px;
+}
+d{
+    white-space: pre-line;
+    width: 30vw;
+    display: block;
+}
+pm {
+    color: #e8777c;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+code {
+    font-family: -webkit-body;
+    letter-spacing: 0.7px;
+    background: whitesmoke;
+    width: 30vw;
+    display: block;
+    padding: 15px;
+    margin: 2px 0 10px 0;
 }
