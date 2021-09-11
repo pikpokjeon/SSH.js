@@ -1,10 +1,5 @@
-import {createSVG, createMultiple} from '../svg/svg.js'
-import { animateSVG } from '../svg/animation.js'
-import {Circle} from '../svg/shape.js'
-import {id} from '../lib/html.js'
-import { Svg,G } from '../svg/container.js'
-const svgArea = document.getElementById('svg-area')
-
+import {createSVG,Svg,G,Circle,Rect,animateSVG, createMultiple} from '../svg/svg.js'
+import { id } from '../lib/html'
 const rect1 = createSVG('rect').attr({
     width: 100,
     height: 100,

@@ -1,4 +1,4 @@
-import {createSVG} from "./svg.js"
+import {createSVG} from "./create.js"
 
 export const Circle = (attr) => createSVG('circle').attr(attr)
 

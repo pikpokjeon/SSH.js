@@ -1,4 +1,4 @@
-import {createSVG} from "./svg";
+import {createSVG} from "./create.js";
 
 export const Svg = (attr) => createSVG('svg').attr(attr)
 

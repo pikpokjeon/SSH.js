@@ -1,4 +1,4 @@
-import {  createSVG, createElementMethodChaining ,getElementAttributes} from "./svg.js"
+import {  createSVG, createElementMethodChaining ,getElementAttributes} from "./create.js"
 
 
 export const setTarget = (el) => (target) => 
