@@ -26,7 +26,7 @@ Append to the element created by createSVG function
 ``` javascript
 const circles =
  createMultiple('circle', 5, []) // type, count, initArray
- .attrMap((el, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))()
+ .attrMap((el, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))
 ```
 In attrMap method, each element (el) and it's index (i) in the list are passed as parameter.
 
