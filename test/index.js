@@ -101,7 +101,7 @@ codeArea.innerHTML = `
 <article>
 <h3>Create multiple elements </h3> <br />
 <code><l>const</l> <v>texts</v> = 
-<fn>createMultiple</fn>('text', 7, []) <br /></code>
+<fn>createMultiple</fn>('text', 7, [])<c>// type, count, initArray</c> <br /></code>
 <d>It creates the same type of elements in a list</d>
 <h4>- Set Attributes</h4>
 <code><v>texts</v><fn>.attrMap</fn> (<pm>(head,prev, i)</pm> => <br />
