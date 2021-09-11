@@ -46,13 +46,14 @@ button {
 }
 #code-area{
     width: 40vw;
-    height: 92%;
+    height: 90vh;
     position: fixed;
     overflow-x: hidden;
     overflow-y: scroll;
     box-shadow: 10px 8px 31px #d8d8d8;
     padding-left: 30px;
-    margin-left: -72px;
+    margin-left: -42px;
+    padding-bottom: 100px;
 }
 fn, l ,v {
     font-weight: 700;
