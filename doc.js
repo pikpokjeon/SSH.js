@@ -3,13 +3,25 @@ const codeArea = document.getElementById('code-area')
 codeArea.innerHTML = `
 <article>
 <h3>Create an element </h3> <br />
-<code><l>const</l> <v>rect2</v> = 
+<d>There are two ways of creating an SVG element.</d>
+<code>
+<ip>import {createSVG, Circle} from svg.js </ip><br / >
+<l>const</l> <v>rect</v> =
 <fn>createSVG</fn>('rect') <c>// type</c> <br />
 </code>
-<d>It creates a single element.</d>
-<h4>- Set Attributes</h4>
+<d>It creates a single element without attributes</d>
 <code>
-<v>rect2</v><fn>.attr</fn>({
+<l>const</l> <v>greenCircle</v> =
+<fn>Circle</fn>({cx: 100, cy: 50, r: 10, fill: 'green'})<c>//attributes</c> <br />
+<l>const</l> <v>redCircle</v> =
+<fn>Circle</fn>({cx: 100, cy: 50, r: 10, fill: 'green'})<br />
+</code>
+<d>It creates a single element with attributes.</d>
+<h4>Built in methods</h4>
+<d>It is built in method for the element you've created with above element create functions.</d>
+<h4>- Set Attributes dynamically</h4>
+<code>
+<v>rect</v><fn>.attr</fn>({
     width: 100,
     height: 400,
     fill: 'blue',
@@ -19,15 +31,17 @@ codeArea.innerHTML = `
 </code>
 <d><fn>attr</fn> method, only works with a single element.</d>
 
-<code>
-<v>textElement</v><fn>.text</fn>('some text')
-</code>
-<d><fn>text</fn> method, only works with text-related elements</d>
 
 <h4>- Append multiple elements</h4>
 <code>
 <v>rect2</v><fn>.append</fn>([...elements])
 </code>
+<h4>- Set text</h4>
+<code>
+<v>textElement</v><fn>.text</fn>('some text')
+</code>
+<d><fn>text</fn> method, only works with text-related elements</d>
+
 </article>
 
 <article>
@@ -68,24 +82,37 @@ previous element' attibutes (prev) and the current index of the element are pass
 <d>You can hold the target (attributeName) and animate dynamically.</d>
 
 <code>
-<v>moveVerticalCircle4</v><fn>.animate</fn>(<pm>({cy})</pm> => ({dur:"5s",from:3,to:cy+100,repeatCount: "indefinite"}))
+<v>moveVerticalCircle2</v><fn>.animate</fn>(<pm>({cy})</pm> => ({dur:"5s",from:3,to:cy+100,repeatCount: "indefinite"}))
 </code>
-<d>In <fn>animate</fn> method the element's attributes are passed as parameter.</d>
+<d>In <fn>animate</fn> method the element's attributes are passed as parameter. <fn>animateSVG</fn> function returns it's element,</d>
 
 </article>
 
 <article>
 <h3>Set svg tree</h3> <br />
-<code><l>const</l> <v>svg</v> = <br />
-svg<fn>.append</fn>([ <c>// type, count, initArray</c> <br />
-    <fn>createSVG</fn>('g')<fn>.append</fn>([
-    ...squares,
-    ...circles,
-    animateSVG(rect2).target('y').animate(...)
-    ])
+<code>
+<ip>import {Svg, G, Rect} from 'svg.js'</ip> <br />
+<ip>import {id} from 'html.js'</ip> <br />
+<l>const</l> <v>exampleTree</v> = <br />
+&nbsp; &nbsp;&nbsp;&nbsp;<fn>Svg</fn>({id: 'svg-example', width: 700, height: 800})<br />
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<fn>.append</fn>([ <br />
+    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <fn>G</fn>({id: 'svg-group'})<fn>.append</fn>([<br />
+        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;...squares,<br />
+        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;...circles,<br />
+        &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;circles[2]<fn>.attr</fn>({fill:'blue'}) <br />
+        &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<fn>animateSVG</fn>(rect)<fn>.target</fn>('y')<fn>.animate</fn>(...) <br />
+        &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<fn>Rect</fn>({
+            width: 100,
+            height: 100,
+            fill: 'red',
+            x: 400,
+            y: 30,
+        }) <br />
+    ])<br />
+    <fn>id</fn>('svg-area')<fn>.appendchild</fn>(exampleTree)
 </code>
-<d><fn>animateSVG</fn> function returns it's element, 
-so that you dont have to assign it to variable and list it to <fn>append</fn> method.</d>
+<d> 
+You can append a list of elements by spreads and animated SVG which returns the element. Here I used <fn>id</fn> function which selects document's element by id then appends the created svg tree to it.</d>
 </article>
 
 `
