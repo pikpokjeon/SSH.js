@@ -50,7 +50,7 @@ animateSVG().target().animate() returns it's element.
 ``` javascript
 
 const svg =
- svg.append([ // type, count, initArray
+ svg.append([ 
  createSVG('g').append([
   ...squares,
   ...circles,
