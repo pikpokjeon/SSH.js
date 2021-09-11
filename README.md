@@ -6,12 +6,59 @@
 > <strong>SVG와 HTML DOM 요소를 쉽게 생성하고 속성을 변형하여
 화면에 적용할 수 있는 모듈</strong>로서 데이터 시각화를 편리하게 구성하도록 한다.
 
-#### collaborators 
-|  팀원 | 아이디 |
-| -------- | -------- |
-|전예진 |  [pikpokjeon](https://github.com/pikpokjeon)|
-|  현|  [ Aiden-leee](https://github.com/Aiden-leee)| 
-|  김진희|  [ dev-jinheekim](https://github.com/dev-jinheekim)| 
+#### Create an element
+``` javascript
+const rect2 = createSVG('rect') // type
+```
+#### Set Attributes
+``` javascript
+rect2
+ .attr({ width: 100, height: 400, fill: 'blue', x: 250, y: 100, })
+```
+#### Append multiple elements
+``` javascript
+rect2
+ .append([...elements])
+```
+Append to the element created by createSVG function
+
+#### Create multiple elements
+``` javascript
+const circles =
+ createMultiple('circle', 5, []) // type, count, initArray
+ .attrMap((el, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))()
+```
+In attrMap method, each element (el) and it's index (i) in the list are passed as parameter.
+
+#### Animate an element
+``` javascript
+
+const moveVerticalCircle2 =
+ animateSVG(circles[2])// element
+ .target('cy')// attributeName (to animate)
+```
+You can hold the target (attributeName) and animate dynamically.
+
+``` javascript
+moveVerticalCircle4
+ .animate(({cy}) => ({dur:"5s",from:3,to:cy+100,repeatCount: "indefinite"}))
+```
+In animate method the element's attributes are passed as parameter.
+animateSVG().target().animate() returns it's element.
+
+#### Set svg tree
+``` javascript
+
+const svg =
+ svg.append([ // type, count, initArray
+ createSVG('g').append([
+  ...squares,
+  ...circles,
+  animateSVG(rect2).target('y').animate(...),
+  rect4,
+ ])
+```
+
 
 #### svg 렌더링 테스트
 ```
@@ -198,3 +245,10 @@ Chart.init(data, chartOptions)
                   feature: 기능 추가,
                   refactor: 코드 개선
 ```
+
+#### collaborators 
+|  팀원 | 아이디 |
+| -------- | -------- |
+|전예진 |  [pikpokjeon](https://github.com/pikpokjeon)|
+|  현|  [ Aiden-leee](https://github.com/Aiden-leee)| 
+|  김진희|  [ dev-jinheekim](https://github.com/dev-jinheekim)| 
