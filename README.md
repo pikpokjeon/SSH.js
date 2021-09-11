@@ -8,16 +8,37 @@
 > <strong>SVG와 HTML DOM 요소를 쉽게 생성하고 속성을 변형하여
 > 화면에 적용할 수 있는 모듈</strong>로서 데이터 시각화를 편리하게 구성하도록 한다.
 
+---
+
 #### Create an element
 
+There are two ways of creating an SVG element.
+
+There are two ways of creating an SVG element.
+
 ```javascript
-const rect2 = createSVG('rect') // type
+
+import {createSVG, Circle} from svg.js
+const rect = createSVG('rect') // type
 ```
 
-- Set Attributes
+It creates a single element without attributes
 
 ```javascript
-rect2.attr({ width: 100, height: 400, fill: 'blue', x: 250, y: 100 })
+const greenCircle = Circle({ cx: 100, cy: 50, r: 10, fill: 'green' }) //attributes
+const redCircle = Circle({ cx: 100, cy: 50, r: 10, fill: 'green' })
+```
+
+It creates a single element with attributes.
+
+#### - Built in methods
+
+It is built in method for the element you've created with above element create functions.
+
+- Set Attributes dynamically
+
+```javascript
+rect.attr({ width: 100, height: 400, fill: 'blue', x: 250, y: 100 })
 ```
 
 <strong>attr</strong> method, only works with a single element.
@@ -27,6 +48,14 @@ rect2.attr({ width: 100, height: 400, fill: 'blue', x: 250, y: 100 })
 ```javascript
 rect2.append([...elements])
 ```
+
+- Set text
+
+```javascript
+textElement.text('some text')
+```
+
+<strong>text</strong> method, only works with text-related elements
 
 #### Create multiple elements
 
@@ -39,13 +68,15 @@ It creates the same type of elements in a list
 - Set Attributes
 
 ```javascript
-texts.attrMap((head, prev, i) => ({
-  width: 50,
-  height: 70,
-  fill: i === 0 ? 'black' : i > 1 && i < 5 ? 'red' : head.fill,
-  x: i === 0 ? 0 : prev.x + 150,
-  y: i === 0 ? 250 : prev.y + i * 10,
-}))
+texts
+  .attrMap((head, prev, i) => ({
+    width: 50,
+    height: 70,
+    fill: i === 0 ? 'black' : i > 1 && i < 5 ? 'red' : head.fill,
+    x: i === 0 ? 0 : prev.x + 150,
+    y: i === 0 ? 250 : prev.y + i * 10,
+  }))
+  .map(t => t.text('text-{i}'))
 ```
 
 In <strong>attrMap</strong> method, first element' attributes (head),
@@ -67,7 +98,7 @@ const moveVerticalCircle2 = animateSVG(circles[2]) // element
 You can hold the target (attributeName) and animate dynamically.
 
 ```javascript
-moveVerticalCircle4.animate(({ cy }) => ({
+moveVerticalCircle2.animate(({ cy }) => ({
   dur: '5s',
   from: 3,
   to: cy + 100,
@@ -83,14 +114,24 @@ animateSVG().target().animate() returns it's element.
 ```javascript
 
 const svg =
- svg.append([
- createSVG('g').append([
-  ...squares,
-  ...circles,
-  animateSVG(rect2).target('y').animate(...),
-  rect4,
- ])
+import {Svg, G, Rect} from 'svg.js'
+import {id} from 'html.js'
+const exampleTree =
+     Svg({id: 'svg-example', width: 700, height: 800})
+          .append([
+                G({id: 'svg-group'}).append([
+               ...squares,
+               ...circles,
+                circles[2].attr({fill:'blue'})
+                animateSVG(rect).target('y').animate(...)
+                Rect({ width: 100, height: 100, fill: 'red', x: 400, y: 30, })
+])
+id('svg-area').appendchild(exampleTree)
 ```
+
+You can append a list of elements by spreads and animated SVG which returns the element. Here I used id function which selects document's element by id then appends the created svg tree to it.
+
+---
 
 #### svg 렌더링 테스트
 
