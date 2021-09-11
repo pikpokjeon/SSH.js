@@ -1,5 +1,5 @@
 import {createSVG,Svg,G,Circle,Rect,animateSVG, createMultiple} from '../svg/svg.js'
-import { id } from '../lib/html'
+import { id } from '../lib/html.js'
 const rect1 = createSVG('rect').attr({
     width: 100,
     height: 100,

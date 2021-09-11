@@ -1,6 +1,6 @@
-import {createSVG, createMultiple} from "./create";
-import {Svg, G} from "./container";
-import {Circle, Rect} from "./shape";
-import {animateSVG} from "./animation";
+import {createSVG, createMultiple} from "./create.js";
+import {Svg, G} from "./container.js";
+import {Circle, Rect} from "./shape.js";
+import {animateSVG} from "./animation.js";
 
 export {createSVG,Svg,G,Circle,Rect,animateSVG,createMultiple}
