@@ -122,7 +122,7 @@ previous element' attibutes (prev) and the current index of the element are pass
 <fn>.attr</fn>({
     fill:'green'
 })</code> 
-<d><fn>attr</fn> method is also possiple to use for a single element from the list.</d>
+<d><fn>attr</fn> method is also possible to use for a single element from the list.</d>
 
 </article>
 
