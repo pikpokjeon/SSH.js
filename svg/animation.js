@@ -1,4 +1,4 @@
-import {  createSVG, createElementMethodChaining } from "./svg.js"
+import {  createSVG, createElementMethodChaining ,getElementAttributes} from "./svg.js"
 
 
 export const setTarget = (el) => (target) => 
@@ -8,17 +8,8 @@ export const setTarget = (el) => (target) =>
     return  el
 }
 
-export const setAnimate = (el) => (f) =>
-{
-    const attributes = Object.values(el.attributes).reduce((acc, cur) =>
-    {
-        Object.assign(acc,{[cur.name]: isNaN(cur.nodeValue) ? cur.nodeValue: Number(cur.nodeValue) })
-        return acc
-    },{})
-    console.log(attributes,f(attributes))
-    el.firstChild.attr(f(attributes))
-    return el
-}
+export const setAnimate = (el) => (f) => el.firstChild.attr(f(getElementAttributes(el)))
+
 
 const animateMethods = {
     target: (el) => (target) => setTarget(el)(target),

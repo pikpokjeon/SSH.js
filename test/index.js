@@ -27,10 +27,11 @@ const dropDownRect = animateSVG(rect2)
 
 
 const circles = createMultiple('circle', 5, [])
-    .attrMap((t, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))
+    .attrMap((head,prev, i) => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))
     
+
 const squares = createMultiple('rect', 7, [])
-    .attrMap((t, i) => ({
+    .attrMap((head,prev, i) => ({
         width: 100,
         height: 100,
         fill: 'yellow',
@@ -39,9 +40,25 @@ const squares = createMultiple('rect', 7, [])
     }))
 
 
+const texts = createMultiple('text', 7, [])
+    .attrMap((head,prev, i) =>
+        ({
+            width: 50,
+            height: 70,
+            fill: i === 0 ? 'black' : i > 1 && i < 5 ? 'red' : head.fill,
+            x: i === 0 ? 0 : prev.x + 150,
+            y: i === 0? 250 : prev.y + ((i*10)),
+        })
+    ).map( (e,i) => e.text(`text-${i}`))
+
+texts[4].attr({
+        fill:'green'
+})
+
 animateSVG(circles[2])
     .target('cy')
     .animate(({cy}) => ({dur:"5s",from:3,to:cy+100,repeatCount: "indefinite"}))
+
 
 const svg = createSVG('svg')
     .attr({width: 1200, height: 600, x: 200, y: 300})
@@ -52,6 +69,7 @@ const svg = createSVG('svg')
                 .target('y')
                 .animate(({y}) => ({dur: '2s', from: y, to: 100, repeatCount: 'indefinite'})),
             dropDownRect,
+            ...texts,
             ...circles,
         ])
     ])
@@ -62,9 +80,13 @@ svgArea.appendChild(svg)
 codeArea.innerHTML = `
 <article>
 <h3>Create an element </h3> <br />
-<code><l>const</l> <v>rect2</v> = <br />
+<code><l>const</l> <v>rect2</v> = 
 <fn>createSVG</fn>('rect') <c>// type</c> <br />
-<fn>.attr</fn>({
+</code>
+<d>It creates a single element.</d>
+<h4>- Set Attributes</h4>
+<code>
+<v>rect2</v><fn>.attr</fn>({
     width: 100,
     height: 400,
     fill: 'blue',
@@ -72,16 +94,36 @@ codeArea.innerHTML = `
     y: 100,
 })</code> 
 </code>
+<d><fn>attr</fn> method, only works with a single element.</d>
 
 </article>
 
 <article>
 <h3>Create multiple elements </h3> <br />
-<code><l>const</l> <v>circles</v> = <br />
-<fn>createMultiple</fn>('circle', 5, []) <c>// type, count, initArray</c> <br />
-<fn>.attrMap</fn>(<pm>(el, i)</pm> => ({cx: i * 200, cy: 50, r: i * 10, fill:'red'}))()</code> 
-</code>
-<d>In <fn>attrMap</fn> method, each element (el) and it's index (i) in the list are passed as parameter.</d>
+<code><l>const</l> <v>texts</v> = 
+<fn>createMultiple</fn>('text', 7, []) <br /></code>
+<d>It creates the same type of elements in a list</d>
+<h4>- Set Attributes</h4>
+<code><v>texts</v><fn>.attrMap</fn> (<pm>(head,prev, i)</pm> => <br />
+
+({&nbsp; 
+    &nbsp;width: 50, <br />
+    &nbsp; &nbsp;&nbsp;&nbsp;height: 70, <br />
+    &nbsp; &nbsp;&nbsp;&nbsp;fill: i === 0 ? 'black' : i > 1 && i < 5 ? 'red' : head.fill, <br />
+    &nbsp; &nbsp;&nbsp;&nbsp;x: i === 0 ? 0 : prev.x + 150, <br />
+    &nbsp; &nbsp;&nbsp;&nbsp;y: i === 0? 250 : prev.y + ((i*10)), <br />
+}))</code> 
+<d>In <fn>attrMap</fn> method, first element' attributes (head),
+previous element' attibutes (prev) and the current index of the element are passed as parameter
+
+</d>
+
+<code><v>texts[4]</v> 
+<fn>.attr</fn>({
+    fill:'green'
+})</code> 
+<d><fn>attr</fn> method is also possiple to use for a single element from the list.</d>
+
 </article>
 
 <article>

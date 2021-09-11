@@ -43,7 +43,8 @@ export const setAttributes = (el) => (attr) =>
 
 export const setTextContent = (el) => (text) =>
 {
-    el.textContent = text; return el
+    if (el.tagName === 'text') {el.textContent = text; return el}
+    else {console.warn('[ERROR] The element is not text type')}
 }
 
 
@@ -51,18 +52,35 @@ export const createSVGElement = (type) =>
     document.createElementNS('http://www.w3.org/2000/svg', type)
 
 
+export const getElementAttributes = (el) =>
+    Object.values(el.attributes)
+        .reduce((acc, cur) =>
+        {   
+            Object.assign(acc,{[cur.name]: isNaN(cur.nodeValue) ? cur.nodeValue: Number(cur.nodeValue) })
+            return acc
+        },{})
+
+
 export const createMultiple = (type, initCount, list) =>
 {
+    const elementList = listingElements(type, list, initCount)
     const attrMap = f =>
-        listingElements(type, list, initCount)
+        elementList
             .map((e, i) =>
-                e.attr(f(e, i)))
+            {
+                const [head, prev] = [
+                    getElementAttributes(elementList[0]),
+                    getElementAttributes(elementList[i - 1 < 0 ? 0 : i - 1])
+                ]
+                return e.attr(f(head,prev, i))
+            })
     return {attrMap}
 }
 
+
 const listingElements = (type, list, count) =>
 {
-    if (count < 1) return list
+    if (count < 0) return list
     list.push( createSVG(type))
     return listingElements(type,list,count-1)
 }
