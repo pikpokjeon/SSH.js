@@ -1,5 +1,5 @@
 # SSH.js [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fpikpokjeon%2FSSH&count_bg=%23FFAD0F&title_bg=%23555555&icon=&icon_color=%23984040&title=%EB%B0%A9%EB%AC%B8%EC%9E%90&edge_flat=true)](https://hits.seeyoufarm.com)
-[SVG rendering test page](https://pikpokjeon.github.io/SSH/) <br />
+[SVG rendering test page](https://pikpokjeon.github.io/SSH.js/) <br />
 > Super SVG Helper, so called SSH is the SVG library which helps you easily handle and modify SVGs for your web project.
 ### Main features
 - SVG elements creation
