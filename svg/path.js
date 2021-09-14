@@ -1,3 +1,5 @@
+import { coordinate } from "./coordinate.js"
+
 
 export const genPath = (coord) => (data, type) =>
 {
@@ -26,3 +28,4 @@ export const genPath = (coord) => (data, type) =>
     }
 }
 
+export const getPath = (w, h, d, type) => genPath(coordinate(w,h,d))(d,type)

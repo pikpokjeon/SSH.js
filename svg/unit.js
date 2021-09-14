@@ -9,7 +9,7 @@ export const getUnit = (w, h, data) =>
     ]
     const MAX = Math.max(maxData, Math.abs(minData))
     const SUM = maxData + Math.abs(minData)
-    const unitY = height / MAX
+    const unitY = h / MAX
     return {
         unit: {
             x: unitX,
