@@ -1,4 +1,5 @@
 
+import {  getAttr} from '../lib/common.js'
 
 export const createElementMethodChaining = (methods) => (type, chain = {}) =>
 {
@@ -52,14 +53,6 @@ export const createSVGElement = (type) =>
     document.createElementNS('http://www.w3.org/2000/svg', type)
 
 
-export const getElementAttributes = (el) =>
-    Object.values(el.attributes)
-        .reduce((acc, cur) =>
-        {   
-            Object.assign(acc,{[cur.name]: isNaN(cur.nodeValue) ? cur.nodeValue: Number(cur.nodeValue) })
-            return acc
-        },{})
-
 
 export const createMultiple = (type, initCount, list) =>
 {
@@ -69,8 +62,8 @@ export const createMultiple = (type, initCount, list) =>
             .map((e, i) =>
             {
                 const [head, prev] = [
-                    getElementAttributes(elementList[0]),
-                    getElementAttributes(elementList[i - 1 < 0 ? 0 : i - 1])
+                    getAttr(elementList[0]),
+                    getAttr(elementList[i - 1 < 0 ? 0 : i - 1])
                 ]
                 return e.attr(f(head,prev, i))
             })

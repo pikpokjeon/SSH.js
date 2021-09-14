@@ -80,6 +80,9 @@ pm {
     font-weight: 600;
     letter-spacing: 2px;
 }
+ip {
+    font-size: 13px;
+}
 code {
     font-family: -webkit-body;
     letter-spacing: 0.7px;

@@ -1,5 +1,5 @@
-import {  createSVG, createElementMethodChaining ,getElementAttributes} from "./create.js"
-
+import {  createSVG, createElementMethodChaining ,} from "./create.js"
+import {  getAttr} from '../lib/common.js'
 
 export const setTarget = (el) => (target) => 
 {
@@ -8,7 +8,7 @@ export const setTarget = (el) => (target) =>
     return  el
 }
 
-export const setAnimate = (el) => (f) => el.firstChild.attr(f(getElementAttributes(el)))
+export const setAnimate = (el) => (f) => el.firstChild.attr(f(getAttr(el)))
 
 
 const animateMethods = {
