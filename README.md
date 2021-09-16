@@ -2,6 +2,7 @@
 [SVG rendering test page](https://pikpokjeon.github.io/SSH.js/) <br />
 > Super SVG Helper, so called SSH is the SVG library which helps you easily handle and modify SVGs for your web project.
 ### Main features
+- SVG elemnts states management
 - SVG elements creation
 - Dynamically modify and animate SVG
 - Event handling
